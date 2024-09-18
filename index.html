@@ -5,27 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TTS Web Application</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="tts.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Text to Speech</h1>
+    <h1>Text to Speech Application</h1>
 
     <!-- Text Area Input -->
     <textarea id="textInput" placeholder="Enter text to speak"></textarea>
 
-    <!-- Voice Selection -->
-    <select id="voiceSelect">
-        <option>Select a voice</option>
-    </select>
+    <!-- Voice Selection Dropdown -->
+    <select id="voiceSelect"></select>
 
-    <!-- Speak and Preview Buttons -->
-    <button id="speakButton">Speak</button>
+    <!-- Control Buttons -->
+    <button id="startButton">Start</button>
+    <button id="pauseButton">Pause</button>
     <button id="previewButton">Preview</button>
 
     <footer>
-        <p>Powered by Green</p>
+        <p>Powered by Web Speech API</p>
     </footer>
 
-    <script src="tts.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
