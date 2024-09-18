@@ -58,45 +58,62 @@
     <button onclick="speak()">Speak</button>
 
     <script>
-        let voices = [];
+        const synth = window.speechSynthesis;
+const voiceSelect = document.querySelector('#voiceSelect');
 
-        // Function to populate the voice options
-        function populateVoiceList() {
-            voices = window.speechSynthesis.getVoices();
-            let voicesDropdown = document.getElementById('voices');
-            voicesDropdown.innerHTML = '';
+function populateVoices() {
+    let voices = synth.getVoices();
 
-            voices.forEach((voice, index) => {
-                let option = document.createElement('option');
-                option.value = index;
-                option.textContent = `${voice.name} (${voice.lang})`;
-                voicesDropdown.appendChild(option);
-            });
+    if (voices.length === 0) {
+        // Try again after a short delay for mobile devices where voices might load slowly
+        setTimeout(populateVoices, 100);
+        return;
+    }
+
+    // Clear existing options
+    voiceSelect.innerHTML = '';
+
+    voices.forEach((voice) => {
+        const option = document.createElement('option');
+        option.textContent = `${voice.name} (${voice.lang})`;
+
+        // Mark the voice as the default if it's the default system voice
+        if (voice.default) {
+            option.textContent += ' -- DEFAULT';
         }
 
-        // Populate the voice list when the voices are loaded
-        populateVoiceList();
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = populateVoiceList;
-        }
+        option.setAttribute('data-name', voice.name);
+        option.setAttribute('data-lang', voice.lang);
+        voiceSelect.appendChild(option);
+    });
+}
 
-        // Display the speed value dynamically
-        const rateInput = document.getElementById('rate');
-        const rateValueDisplay = document.getElementById('rateValue');
-        rateInput.addEventListener('input', function() {
-            rateValueDisplay.textContent = rateInput.value;
-        });
+// Populate the voices list once the voices are loaded
+populateVoices();
 
-        // Function to speak the text with selected voice and speed
-        function speak() {
-            var text = document.getElementById('text').value;
-            var speech = new SpeechSynthesisUtterance();
-            speech.text = text;
-            var selectedVoiceIndex = document.getElementById('voices').value;
-            var rate = document.getElementById('rate').value;
-            speech.voice = voices[selectedVoiceIndex];
-            speech.rate = rate; // Set the speed
-            window.speechSynthesis.speak(speech);
+// Re-populate when voiceschange event is fired (this event is fired on some browsers when voices are updated)
+if (synth.onvoiceschanged !== undefined) {
+    synth.onvoiceschanged = populateVoices;
+}
+
+// Code to speak text using the selected voice
+function speak() {
+    if (synth.speaking) {
+        console.error('SpeechSynthesis is already speaking.');
+        return;
+    }
+    
+    const utterThis = new SpeechSynthesisUtterance(document.querySelector('#textInput').value);
+    const selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+
+    voices = synth.getVoices();
+    utterThis.voice = voices.find((voice) => voice.name === selectedOption);
+
+    synth.speak(utterThis);
+}
+
+document.querySelector('#speakButton').addEventListener('click', speak);
+
         }
     </script>
 </body>
