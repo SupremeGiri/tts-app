@@ -1,52 +1,19 @@
+/* Existing CSS rules */
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #333;
-    color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-h1 {
-    margin: 20px;
-    font-size: 2rem;
-}
-
-textarea {
-    width: 80%;
-    height: 150px;
+#textContainer {
     margin: 20px;
     padding: 10px;
-    border-radius: 5px;
     border: 1px solid #555;
     background-color: #222;
     color: #f0f0f0;
+    text-align: left;
+    font-size: 1rem;
 }
 
-select {
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #555;
-    background-color: #222;
-    color: #f0f0f0;
-}
-
-button {
-    margin: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+.highlight {
     background-color: #555;
     color: #f0f0f0;
-    cursor: pointer;
+    padding: 0 5px;
+    border-radius: 3px;
 }
 
-button:hover {
-    background-color: #777;
-}
-
-footer {
-    margin: 20px;
-}
