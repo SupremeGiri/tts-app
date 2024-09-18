@@ -110,6 +110,12 @@ function speak() {
     utterThis.voice = voices.find((voice) => voice.name === selectedOption);
 
     synth.speak(utterThis);
+    if (voiceSelect.length === 0) {
+    const noVoiceOption = document.createElement('option');
+    noVoiceOption.textContent = 'No voices available for this device';
+    voiceSelect.appendChild(noVoiceOption);
+}
+
 }
 
 document.querySelector('#speakButton').addEventListener('click', speak);
