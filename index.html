@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TTS Web Application</title>
+    <title>TTS Web Application with Highlighting</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Text to Speech Application</h1>
+    <h1>Text to Speech Application with Highlighting</h1>
 
     <!-- Text Area Input -->
     <textarea id="textInput" placeholder="Enter text to speak"></textarea>
@@ -20,6 +20,11 @@
     <button id="startButton">Start</button>
     <button id="pauseButton">Pause</button>
     <button id="previewButton">Preview</button>
+
+    <!-- Highlighted Text -->
+    <div id="textContainer">
+        <p id="highlightedText"></p>
+    </div>
 
     <footer>
         <p>Powered by Web Speech API</p>
