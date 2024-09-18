@@ -1,87 +1,89 @@
 const synth = window.speechSynthesis;
 const voiceSelect = document.querySelector('#voiceSelect');
 const textInput = document.querySelector('#textInput');
+const speakButton = document.querySelector('#speakButton');
+const previewButton = document.querySelector('#previewButton');
 
 // Function to populate available voices
 function populateVoices() {
     const voices = synth.getVoices();
-    
-    // Clear the voice select dropdown
     voiceSelect.innerHTML = '';
-
-    // Check if voices are available
-    if (voices.length === 0) {
-        const noVoiceOption = document.createElement('option');
-        noVoiceOption.textContent = 'No voices available';
-        voiceSelect.appendChild(noVoiceOption);
-        return;
-    }
 
     voices.forEach((voice) => {
         const option = document.createElement('option');
         option.textContent = `${voice.name} (${voice.lang})`;
-
-        // Mark the voice as the default if it's the system default
-        if (voice.default) {
-            option.textContent += ' -- DEFAULT';
-        }
-
         option.setAttribute('data-name', voice.name);
         option.setAttribute('data-lang', voice.lang);
         voiceSelect.appendChild(option);
     });
 }
 
-// Listen for the voiceschanged event, which triggers when voices are loaded
+// Ensure voices are loaded before populating
 if (typeof synth.onvoiceschanged !== 'undefined') {
     synth.onvoiceschanged = populateVoices;
 }
 
-// Function to highlight the word being spoken
-function highlightWord(text, startIndex, length) {
-    const before = text.substring(0, startIndex);
-    const word = text.substring(startIndex, startIndex + length);
-    const after = text.substring(startIndex + length);
-
-    textInput.innerHTML = `${before}<span class="highlight">${word}</span>${after}`;
-}
-
 // Function to speak the text using the selected voice
 function speak() {
+    const text = textInput.value;
+
     if (synth.speaking) {
         console.error('SpeechSynthesis is already speaking.');
         return;
     }
 
-    const text = textInput.value;
     if (text === '') {
         console.error('No text input.');
         return;
     }
 
+    // Use browser's SpeechSynthesis API
     const utterThis = new SpeechSynthesisUtterance(text);
     const selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
     const voices = synth.getVoices();
     utterThis.voice = voices.find((voice) => voice.name === selectedOption);
 
-    // Split the text into words and track the word being spoken
-    let currentWordIndex = 0;
-    const words = text.split(' ');
-
-    utterThis.onboundary = (event) => {
-        if (event.name === 'word') {
-            currentWordIndex = event.charIndex;
-            highlightWord(text, event.charIndex, event.charLength);
-        }
-    };
+    // Adjust properties for smoother pronunciation
+    utterThis.rate = 1;    // Normal rate
+    utterThis.pitch = 1;   // Normal pitch
+    utterThis.volume = 1;  // Maximum volume
 
     synth.speak(utterThis);
 }
 
-// Event listener for the speak button
-document.querySelector('#speakButton').addEventListener('click', speak);
+// Function to preview the text using the selected voice
+function preview() {
+    const text = textInput.value;
 
-// Trigger voice population on page load
+    if (synth.speaking) {
+        console.error('SpeechSynthesis is already speaking.');
+        return;
+    }
+
+    if (text === '') {
+        console.error('No text input.');
+        return;
+    }
+
+    // Use browser's SpeechSynthesis API for preview
+    const utterThis = new SpeechSynthesisUtterance(text);
+    const selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+    const voices = synth.getVoices();
+    utterThis.voice = voices.find((voice) => voice.name === selectedOption);
+
+    // Adjust properties for preview
+    utterThis.rate = 1;    // Normal rate
+    utterThis.pitch = 1;   // Normal pitch
+    utterThis.volume = 1;  // Maximum volume
+
+    synth.speak(utterThis);
+}
+
+// Attach event listeners
+speakButton.addEventListener('click', speak);
+previewButton.addEventListener('click', preview);
+
+// Populate voices on page load
 window.onload = function() {
     populateVoices();
 };
