@@ -1,5 +1,6 @@
 const synth = window.speechSynthesis;
 const voiceSelect = document.querySelector('#voiceSelect');
+const textInput = document.querySelector('#textInput');
 
 // Function to populate available voices
 function populateVoices() {
@@ -36,6 +37,15 @@ if (typeof synth.onvoiceschanged !== 'undefined') {
     synth.onvoiceschanged = populateVoices;
 }
 
+// Function to highlight the word being spoken
+function highlightWord(text, startIndex, length) {
+    const before = text.substring(0, startIndex);
+    const word = text.substring(startIndex, startIndex + length);
+    const after = text.substring(startIndex + length);
+
+    textInput.innerHTML = `${before}<span class="highlight">${word}</span>${after}`;
+}
+
 // Function to speak the text using the selected voice
 function speak() {
     if (synth.speaking) {
@@ -43,17 +53,27 @@ function speak() {
         return;
     }
 
-    const textInput = document.querySelector('#textInput').value;
-    if (textInput === '') {
+    const text = textInput.value;
+    if (text === '') {
         console.error('No text input.');
         return;
     }
 
-    const utterThis = new SpeechSynthesisUtterance(textInput);
+    const utterThis = new SpeechSynthesisUtterance(text);
     const selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
-
     const voices = synth.getVoices();
     utterThis.voice = voices.find((voice) => voice.name === selectedOption);
+
+    // Split the text into words and track the word being spoken
+    let currentWordIndex = 0;
+    const words = text.split(' ');
+
+    utterThis.onboundary = (event) => {
+        if (event.name === 'word') {
+            currentWordIndex = event.charIndex;
+            highlightWord(text, event.charIndex, event.charLength);
+        }
+    };
 
     synth.speak(utterThis);
 }
@@ -63,6 +83,5 @@ document.querySelector('#speakButton').addEventListener('click', speak);
 
 // Trigger voice population on page load
 window.onload = function() {
-    // Try to populate voices on page load in case they are already available
     populateVoices();
 };
