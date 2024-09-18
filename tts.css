@@ -23,8 +23,8 @@ h1 {
 /* Text Area */
 textarea {
     padding: 12px;
-    width: 6000px; /* Larger width */
-    height: 3000px; /* Larger height */
+    width: 5000px; /* Larger width */
+    height: 2000px; /* Larger height */
     background-color: #161b22;
     color: #ffffff;
     border: 2px solid #30363d;
