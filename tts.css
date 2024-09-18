@@ -23,8 +23,8 @@ h1 {
 /* Text Area */
 textarea {
     padding: 12px;
-    width: 400px;
-    height: 150px;
+    width: 600px; /* Adjust width to make it larger */
+    height: 300px; /* Adjust height to make it larger */
     background-color: #161b22;
     color: #ffffff;
     border: 2px solid #30363d;
@@ -34,7 +34,7 @@ textarea {
     outline: none;
     transition: all 0.3s ease;
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
-    resize: none;
+    resize: none; /* Prevent user from resizing manually */
 }
 
 textarea:focus {
@@ -73,7 +73,7 @@ button:active {
 /* Select Dropdown */
 select {
     padding: 12px;
-    width: 400px;
+    width: 600px; /* Adjust width to make it larger */
     background-color: #161b22;
     color: #ffffff;
     border: 2px solid #30363d;
