@@ -9,7 +9,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;          
+    height: 100vh;
 }
 
 /* Header */
@@ -23,23 +23,17 @@ h1 {
 /* Text Area */
 textarea {
     padding: 12px;
-    width: 6000px; /* Adjust width to make it larger */
-    height: 3000px; /* Adjust height to make it larger */
+    width: 600px; /* Larger width */
+    height: 300px; /* Larger height */
     background-color: #161b22;
     color: #ffffff;
-    border: 25px solid #30363d;
-    border-radius: 50px;
+    border: 2px solid #30363d;
+    border-radius: 5px;
     margin-bottom: 20px;
     font-size: 1rem;
     outline: none;
     transition: all 0.3s ease;
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
-    resize: none; /* Prevent user from resizing manually */
-}
-
-textarea:focus {
-    border-color: #58a6ff;
-    box-shadow: 0 0 8px #58a6ff;
 }
 
 /* Highlighted Text */
@@ -73,7 +67,7 @@ button:active {
 /* Select Dropdown */
 select {
     padding: 12px;
-    width: 600px; /* Adjust width to make it larger */
+    width: 600px; /* Larger width */
     background-color: #161b22;
     color: #ffffff;
     border: 2px solid #30363d;
@@ -83,11 +77,6 @@ select {
     outline: none;
     transition: all 0.3s ease;
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-select:focus {
-    border-color: #58a6ff;
-    box-shadow: 0 0 8px #58a6ff;
 }
 
 /* Footer */
