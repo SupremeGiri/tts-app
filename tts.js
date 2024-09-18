@@ -1,19 +1,20 @@
-
 const synth = window.speechSynthesis;
 const voiceSelect = document.querySelector('#voiceSelect');
 
 // Function to populate available voices
 function populateVoices() {
-    let voices = synth.getVoices();
+    const voices = synth.getVoices();
+    
+    // Clear the voice select dropdown
+    voiceSelect.innerHTML = '';
 
+    // Check if voices are available
     if (voices.length === 0) {
-        // Retry if voices are not loaded (especially for mobile devices)
-        setTimeout(populateVoices, 100);
+        const noVoiceOption = document.createElement('option');
+        noVoiceOption.textContent = 'No voices available';
+        voiceSelect.appendChild(noVoiceOption);
         return;
     }
-
-    // Clear existing options
-    voiceSelect.innerHTML = '';
 
     voices.forEach((voice) => {
         const option = document.createElement('option');
@@ -30,11 +31,8 @@ function populateVoices() {
     });
 }
 
-// Populate voices when page is loaded
-populateVoices();
-
-// Re-populate when voices change (important for some browsers/devices)
-if (synth.onvoiceschanged !== undefined) {
+// Listen for the voiceschanged event, which triggers when voices are loaded
+if (typeof synth.onvoiceschanged !== 'undefined') {
     synth.onvoiceschanged = populateVoices;
 }
 
@@ -62,3 +60,9 @@ function speak() {
 
 // Event listener for the speak button
 document.querySelector('#speakButton').addEventListener('click', speak);
+
+// Trigger voice population on page load
+window.onload = function() {
+    // Try to populate voices on page load in case they are already available
+    populateVoices();
+};
