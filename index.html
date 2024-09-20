@@ -3,27 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TTS Web Application with Highlighting</title>
+    <title>TTS Web Application</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Text to Speech Application with Highlighting</h1>
+    <div class="container">
+        <h1>Text to Speech Application</h1>
 
-    <!-- Text Area Input -->
-    <textarea id="textInput" placeholder="Enter text to speak"></textarea>
+        <!-- Text Area Input -->
+        <textarea id="textInput" placeholder="Enter text to speak"></textarea>
 
-    <!-- Voice Selection Dropdown -->
-    <select id="voiceSelect"></select>
+        <!-- Voice Selection Dropdown -->
+        <select id="voiceSelect"></select>
 
-    <!-- Control Buttons -->
-    <button id="startButton">Start</button>
-    <button id="pauseButton">Pause</button>
-    <button id="previewButton">Preview</button>
+        <!-- Control Buttons -->
+        <div class="buttons">
+            <button id="startButton" class="btn">Start</button>
+            <button id="pauseButton" class="btn">Pause</button>
+            <button id="previewButton" class="btn">Preview</button>
+        </div>
 
-    <!-- Highlighted Text -->
-    <div id="textContainer">
-        <p id="highlightedText"></p>
+        <!-- Highlighted Text -->
+        <div id="textContainer">
+            <p id="highlightedText"></p>
+        </div>
     </div>
 
     <footer>
